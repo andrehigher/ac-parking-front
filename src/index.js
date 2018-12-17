@@ -1,39 +1,40 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { createStore, applyMiddleware } from 'redux';
+import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
-
-import reducer from './reducers';
-import './index.css';
-import 'semantic-ui-css/semantic.min.css';
-
-/**
- * CONTAINERS
- */
-import app from './containers/app/app';
-import login from './containers/login/login';
-import authenticator from './containers/authenticator/authenticator';
-
+import {
+  BrowserRouter as Router,
+  Route, 
+  Switch,
+  Redirect
+} from 'react-router-dom';
+import Cookies from 'js-cookie';
 import * as serviceWorker from './serviceWorker';
 
-const middleware = [ thunk ];
-const store = createStore(
-  reducer,
-  applyMiddleware(...middleware)
-);
+import 'semantic-ui-css/semantic.min.css';
+
+import reducers from './reducers';
+import app from './containers/app/app';
+import login from './containers/login/login';
+
+const store = createStore(reducers);
+
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={(props) => (
+    Cookies.get('token')
+      ? <Component {...props} />
+      : <Redirect to='/login' />
+  )} />
+)
 
 render(
   <Provider store={store}>
-    <BrowserRouter>
+    <Router>
       <Switch>
-        <Route path="/" exact={true} component={app} />
-        <Route path="/login" exact={true} component={login} />
-        <Route path="/auth/success" exact={true} component={authenticator} />
-        {/* <Route path="//auth/failure" exact={true} component={login} /> */}
+        <Route path="/login" component={login} />
+        <PrivateRoute path="/" component={app} />
       </Switch>
-    </ BrowserRouter>
+    </Router>
   </Provider>, 
   document.getElementById('root'));
 

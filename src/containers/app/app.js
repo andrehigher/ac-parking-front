@@ -1,55 +1,32 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router';
-import logo from './logo.svg';
-import './app.css';
-import Cookies from 'js-cookie';
+import PropTypes from 'prop-types';
 
-import { fetchAuth } from '../../actions/auth';
+import BottomNav from '../../components/bottom-nav/bottom-nav';
+import Garage from '../../components/garage/garage';
+
+import { fetchCurrent } from '../../actions/garage';
 
 class App extends Component {
-  state = {
-    redirect: false
-  }
-
-  componentWillMount() {
-    if (!Cookies.get('authToken')) {
-      this.setState({ redirect: true });
-    } else {
-      this.props.dispatch(fetchAuth(this.state, Cookies.get('authToken')));
-    }
-  }
 
   render() {
-    const { redirect } = this.state;
-
-    if (redirect) {
-      return <Redirect to='/login'/>;
-    }
+    const { auth, dispatch } = this.props;
     
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <BottomNav user={auth.user} />
+        <Garage dispatch={dispatch} />
       </div>
     );
   }
 }
 
+App.propTypes = {
+  dispatch: PropTypes.func.isRequired
+};
+
 export default connect((state) => {
   return {
-      auth: state.auth
+    auth: state.auth
   };
 })(App);

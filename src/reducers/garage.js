@@ -1,29 +1,29 @@
 import {
-  REQUEST_AUTH,
-  RECEIVE_AUTH,
-} from '../actions/auth';
+  REQUEST_CURRENT_WEEK,
+  RECEIVE_CURRENT_WEEK,
+} from '../actions/garage';
 
 const INITIAL_STATE = {
   isFetching: false,
-  authenticated: false,
+  garage: [],
 };
 
-const auth = (state = INITIAL_STATE, action) => {
+const garage = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case REQUEST_AUTH:
+    case REQUEST_CURRENT_WEEK:
       return {
         ...state,
         isFetching: true
       };
-    case RECEIVE_AUTH:
+    case RECEIVE_CURRENT_WEEK:
       return {
         ...state,
         isFetching: false,
-        authenticated: action.payload
+        garage: action.payload
       };
     default:
       return state;
     }
   }
 
-  export default auth;
+  export default garage;
