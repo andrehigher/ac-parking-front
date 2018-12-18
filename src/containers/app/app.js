@@ -1,32 +1,13 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import React from 'react';
 
 import BottomNav from '../../components/bottom-nav/bottom-nav';
 import Garage from '../../components/garage/garage';
 
-import { fetchCurrent } from '../../actions/garage';
+const App = () => (
+  <div className="App">
+    <BottomNav />
+    <Garage />
+  </div>
+);
 
-class App extends Component {
-
-  render() {
-    const { auth, dispatch } = this.props;
-    
-    return (
-      <div className="App">
-        <BottomNav user={auth.user} />
-        <Garage dispatch={dispatch} />
-      </div>
-    );
-  }
-}
-
-App.propTypes = {
-  dispatch: PropTypes.func.isRequired
-};
-
-export default connect((state) => {
-  return {
-    auth: state.auth
-  };
-})(App);
+export default App;

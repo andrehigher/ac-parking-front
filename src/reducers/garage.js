@@ -1,26 +1,24 @@
 import {
   REQUEST_CURRENT_WEEK,
   RECEIVE_CURRENT_WEEK,
-} from '../actions/garage';
+} from '../constants/garage';
 
 const INITIAL_STATE = {
   isFetching: false,
-  garage: [],
+  spots: [],
 };
 
 const garage = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case REQUEST_CURRENT_WEEK:
-      return {
-        ...state,
-        isFetching: true
-      };
+      return Object.assign({}, state, {
+        isFetching: true,
+      });
     case RECEIVE_CURRENT_WEEK:
-      return {
-        ...state,
+      return Object.assign({}, state, {
         isFetching: false,
-        garage: action.payload
-      };
+        spots: action.payload,
+      });
     default:
       return state;
     }

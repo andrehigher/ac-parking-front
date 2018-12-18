@@ -1,13 +1,21 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { connect } from "react-redux";
 
-class Garage extends Component {
-  render() {
-    return (
-      <div>
-        Garage
-      </div>
-    );
-  }
-}
+const mapStateToProps = state => {
+  return { spots: state.garage.spots };
+};
 
-export default Garage;
+const GarageList = ({ spots }) => (
+  <ul>
+    <li>Garage List</li>
+    {spots.map(spot => (
+      <li key={spot.id}>
+        {spot.name}
+      </li>
+    ))}
+  </ul>
+);
+
+const List = connect(mapStateToProps)(GarageList);
+
+export default List;

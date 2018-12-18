@@ -18,6 +18,7 @@ import app from './containers/app/app';
 import login from './containers/login/login';
 
 const store = createStore(reducers);
+console.log('store', store.getState());
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={(props) => (
@@ -25,7 +26,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
       ? <Component {...props} />
       : <Redirect to='/login' />
   )} />
-)
+);
 
 render(
   <Provider store={store}>
