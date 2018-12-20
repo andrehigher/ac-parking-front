@@ -1,7 +1,8 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import thunkMiddleware from 'redux-thunk'
 import {
   BrowserRouter as Router,
   Route, 
@@ -14,10 +15,13 @@ import * as serviceWorker from './serviceWorker';
 import 'semantic-ui-css/semantic.min.css';
 
 import reducers from './reducers';
-import app from './containers/app/app';
+import app from './components/app/app';
 import login from './containers/login/login';
 
-const store = createStore(reducers);
+const store = createStore(
+  reducers,
+  applyMiddleware(thunkMiddleware),
+);
 console.log('store', store.getState());
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
