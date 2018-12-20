@@ -22,7 +22,6 @@ const store = createStore(
   reducers,
   applyMiddleware(thunkMiddleware),
 );
-console.log('store', store.getState());
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={(props) => (

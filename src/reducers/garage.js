@@ -17,7 +17,7 @@ const garage = (state = INITIAL_STATE, action) => {
     case RECEIVE_CURRENT_WEEK:
       return Object.assign({}, state, {
         isFetching: false,
-        spots: action.payload,
+        spots: action.spots,
       });
     default:
       return state;

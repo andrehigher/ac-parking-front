@@ -1,28 +1,20 @@
 import {
   REQUEST_CURRENT_WEEK,
-  RECEIVE_CURRENT_WEEK
+  RECEIVE_CURRENT_WEEK,
 } from '../constants/garage';
 
 export const requestCurrentWeek = () => ({
   type: REQUEST_CURRENT_WEEK,
 });
   
-export const receiveCurrentWeek = (state, json) => ({
+export const receiveCurrentWeek = json => ({
   type: RECEIVE_CURRENT_WEEK,
-  state,
-  spots: json,
+  spots: json.spots,
 });
 
-export const fetchCurrent = state => async dispatch => {
+export const fetchCurrent = () => dispatch => {
   dispatch(requestCurrentWeek());
-    console.log('fetching...');
-    const response = await fetch(`http://localhost.parking.avenuecode.com:4000/api/garage/current`);
-    const json = await response.json();
-    console.log(json);
-    // .then(data => {
-    //   console.log(data);
-    //   dispatch(receiveCurrentWeek(state, data));
-    // }).catch(e => {
-    // console.log('error', e);
-    // dispatch(receiveCurrentWeek({}, { error: 'Invalid login credentials' }));
+  return fetch(`/api/garage/current`)
+    .then(response => response.json())
+    .then(json => dispatch(receiveCurrentWeek(json)));
 };
