@@ -10,6 +10,8 @@ export const requestCurrentWeek = () => ({
 export const receiveCurrentWeek = json => ({
   type: RECEIVE_CURRENT_WEEK,
   spots: json.spots,
+  from: json.from,
+  to: json.to,
 });
 
 export const fetchCurrent = () => dispatch => {

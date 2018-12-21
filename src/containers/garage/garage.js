@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import styled from 'styled-components';
 import { fetchCurrent } from '../../actions/garage';
 import Spot from '../../components/spot/spot';
+import TopNav from '../../components/top-nav/top-nav';
 
 const GarageBoard = styled.ul`
   background-color: #ececec;
@@ -11,6 +12,7 @@ const GarageBoard = styled.ul`
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-auto-flow: column;
   padding-top: 20px;
+  margin-top: 60px;
   li {
     list-style-type: none;
   }
@@ -20,6 +22,8 @@ const mapStateToProps = state => {
   return {
     spots: state.garage.spots,
     isFetching: state.garage.isFetching,
+    from: state.garage.from,
+    to: state.garage.to,
   };
 };
 
@@ -31,11 +35,15 @@ class GarageList extends Component {
   }
 
   render() {
-    const { isFetching, spots } = this.props;
+    const { isFetching, spots, from, to } = this.props;
     if(isFetching) return <p>Loading...</p>;
     if(!isFetching && !spots) return <p>No data.</p>;
 
     return (
+      <>
+      <TopNav 
+        from={from}
+        to={to} />
       <GarageBoard>
         {spots.slice(0,6).map((spot, index) => {
           return <Spot
@@ -66,6 +74,7 @@ class GarageList extends Component {
             name={spot.name} />
         })}
       </GarageBoard>
+      </>
     )
   }
 }
@@ -74,6 +83,8 @@ GarageList.propTypes = {
   dispatch: PropTypes.func.isRequired,
   isFetching: PropTypes.bool.isRequired,
   spots: PropTypes.array,
+  from: PropTypes.string,
+  to: PropTypes.string,
 }
 
 const List = connect(mapStateToProps)(GarageList);

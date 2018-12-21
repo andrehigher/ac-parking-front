@@ -5,8 +5,8 @@ import Garage from '../../containers/garage/garage';
 
 const App = () => (
   <div className="App">
-    <BottomNav />
     <Garage />
+    <BottomNav />
   </div>
 );
 
