@@ -35,7 +35,7 @@ class GarageList extends Component {
   }
 
   render() {
-    const { isFetching, spots, from, to } = this.props;
+    const { dispatch, isFetching, spots, from, to } = this.props;
     if(isFetching) return <p>Loading...</p>;
     if(!isFetching && !spots) return <p>No data.</p>;
 
@@ -43,7 +43,8 @@ class GarageList extends Component {
       <>
       <TopNav 
         from={from}
-        to={to} />
+        to={to}
+        dispatch={dispatch} />
       <GarageBoard>
         {spots.slice(0,6).map((spot, index) => {
           return <Spot
